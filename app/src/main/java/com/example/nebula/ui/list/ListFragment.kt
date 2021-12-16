@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.chad.library.adapter.base.animation.SlideInBottomAnimation
+import com.chad.library.adapter.base.animation.*
 import com.example.nebula.R
 import com.example.nebula.data.model.ImageObject
 import com.example.nebula.databinding.FragmentListBinding
@@ -47,7 +47,7 @@ class ListFragment : Fragment() {
     }
 
     private fun observe() {
-        listViewModel.images.observe(viewLifecycleOwner) {
+        listViewModel.imagesWithAspectRatio.observe(viewLifecycleOwner) {
             mAdapter.setDiffNewData(it.toMutableList())
             binding.recyclerView.apply {
                 if (adapter != mAdapter) {
@@ -67,8 +67,9 @@ class ListFragment : Fragment() {
 
         mAdapter.apply {
             animationEnable = true
-            adapterAnimation = SlideInBottomAnimation()
-            isAnimationFirstOnly = true
+            adapterAnimation = ScaleInAnimation()
+
+            isAnimationFirstOnly = false
 //            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
             val eds = layoutInflater.inflate(R.layout.list_image_eds,binding.recyclerView,false)
