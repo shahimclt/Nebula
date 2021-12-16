@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textColorPrimary">#EFEFEF</color>
+    <color name="textColorSecondary">#AAAAAA</color>
+    <color name="textColorInverse">#404040</color>
+
+    <color name="colorTranslucentOverlayLight">#11FFFFFF</color>
+    <color name="colorTranslucentOverlayMedium">#22FFFFFF</color>
+    <color name="colorTranslucentOverlayHeavy">#44FFFFFF</color>
+
+    <color name="colorBackground">#1d212b</color>
+    <color name="colorSurface">#292d36</color>
+
+
+    <color name="colorBunny">#efefef</color>
+    <color name="colorBunnyLight">#fff</color>
+</resources>
