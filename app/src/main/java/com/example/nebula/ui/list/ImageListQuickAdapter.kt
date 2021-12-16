@@ -1,5 +1,7 @@
 package com.example.nebula.ui.list
 
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -16,11 +18,15 @@ class ImageListQuickAdapter(data: MutableList<ImageObject>?): BaseQuickAdapter<I
             image = item
             executePendingBindings()
         }
+        val imageView = holder.getView<AppCompatImageView>(R.id.list_image)
+        val layoutParams = imageView.layoutParams as ConstraintLayout.LayoutParams
+        layoutParams.dimensionRatio = item.safeAspectRatio
+        imageView.layoutParams = layoutParams
         Glide.with(context)
             .load(item.url)
             .placeholder(R.drawable.bg_placeholder)
             .error(R.drawable.bg_placeholder)
-            .into(holder.getView(R.id.list_image))
+            .into(imageView)
     }
 
     class DiffCallback: DiffUtil.ItemCallback<ImageObject>() {
