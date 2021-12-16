@@ -2,10 +2,8 @@ package com.example.nebula.ui.list
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.bumptech.glide.Glide
 import com.example.nebula.data.model.ImageObject
 import com.example.nebula.data.repository.ImageRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +16,9 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     private val _images = MutableLiveData<List<ImageObject>>(listOf())
     val images: LiveData<List<ImageObject>> = _images
 
+    val imagesWithAspectRatio: LiveData<List<ImageObject>?> = Transformations.map(_images) {
+        it.filter { im -> im.hasAspectRatio }
+    }
     init {
         getImages()
     }
@@ -26,6 +27,24 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             val im = imageRepository.fetchImages(getApplication() as Context)
             _images.postValue(im)
+            calculateImageDimensions()
+        }
+    }
+
+    private fun calculateImageDimensions() {
+        _images.value?.let {
+            for (image in it) {
+                if(!image.hasAspectRatio) {
+                    val futureBitmap = Glide.with(getApplication() as Context)
+                        .asBitmap()
+                        .load(image.url)
+                        .submit()
+                    val bitmap = futureBitmap.get()
+                    val w = bitmap.width.toFloat()
+                    val h = bitmap.height.toFloat()
+                    image.aspectRatio = w/h
+                }
+            }
         }
     }
 //

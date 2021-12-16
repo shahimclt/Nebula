@@ -12,6 +12,5 @@
     <color name="colorSurface">#292d36</color>
 
 
-    <color name="colorBunny">#efefef</color>
-    <color name="colorBunnyLight">#fff</color>
+    <color name="colorImagePlaceholder">#404040</color>
 </resources>

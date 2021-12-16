@@ -12,6 +12,13 @@ data class ImageObject (
     val title: String,
     val url: String) {
 
+    var aspectRatio: Float? = null
+
+    val hasAspectRatio : Boolean
+        get() {
+            return aspectRatio != null
+        }
+
     val date : LocalDate
     get() {
         return LocalDate.parse(_date)
