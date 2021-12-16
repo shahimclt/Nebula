@@ -1,10 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="colorPrimaryLighter">#9887b5</color>
+    <color name="colorPrimaryLight">#715a96</color>
+    <color name="colorPrimary">#51377a</color>
+    <color name="colorPrimaryDark">#381f61</color>
+    <color name="colorPrimaryDarker">#200b43</color>
+
+    <color name="colorSecondaryLighter">#ffcf95</color>
+    <color name="colorSecondaryLight">#ffbb6a</color>
+    <color name="colorSecondary">#FEAB47</color>
+    <color name="colorSecondaryDark">#ef8e1a</color>
+    <color name="colorSecondaryDarker">#ba690a</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="colorOnPrimary">#EFEFEF</color>
+    <color name="colorOnPrimaryMuted">#AAAAAA</color>
+
+    <color name="colorOnSecondary">#101010</color>
+    <color name="colorOnSecondaryMuted">#606060</color>
+
+    <color name="secondaryTextColor">#FFFFFF</color>
+
+    <color name="light_black_color">#1c232e</color>
+    <color name="light_grey_color">#545659</color>
+
+    <color name="textColorPrimary">#101010</color>
+    <color name="textColorSecondary">#606060</color>
+    <color name="textColorInverse">#FEFEFE</color>
+
+    <!-- State Colors -->
+    <color name="colorSuccess">#00bfa5</color>
+    <color name="colorSuccessDark">#008e76</color>
+    <color name="colorSuccessLight">#5df2d6</color>
+    <color name="colorSuccessLighter">#B0F2E9</color>
+
+    <color name="colorWarning">#ffd54f</color>
+    <color name="colorWarningDark">#c8a415</color>
+    <color name="colorWarningLight">#ffff81</color>
+    <color name="colorWarningLighter">#FFEFBC</color>
+
+    <color name="colorDanger">#ff5252</color>
+    <color name="colorDangerDark">#c50e29</color>
+    <color name="colorDangerLight">#ff867f</color>
+    <color name="colorDangerLighter">#FFCACA</color>
+
+
+    <color name="colorInfo">#00b0ff</color>
+    <color name="colorInfoDark">#0081cb</color>
+    <color name="colorInfoLight">#69e2ff</color>
+    <color name="colorInfoLighter">#C6F4FF</color>
+
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorOnBackground">@color/textColorPrimary</color>
+
+    <color name="colorTranslucentOverlayLight">#11000000</color>
+    <color name="colorTranslucentOverlayMedium">#22000000</color>
+    <color name="colorTranslucentOverlayHeavy">#44000000</color>
+
+    <color name="colorSurface">#f0f0f0</color>
+    <color name="colorSurfaceDivider">#22000000</color>
+    <color name="textColorCard">#EFE7E7</color>
+
+    <!--    Specific Colors   -->
+    <color name="colorChipBackground">#7700bfa5</color>
+
+    <color name="poster_overlay">#991c232e</color>
+
+    <color name="colorBunny">#33000000</color>
+    <color name="colorBunnyLight">#22000000</color>
 </resources>
