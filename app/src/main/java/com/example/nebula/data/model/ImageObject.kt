@@ -28,4 +28,9 @@ data class ImageObject (
     get() {
         return LocalDate.parse(_date)
     }
+
+    val uniqueName : String
+        get() {
+            return title.filterNot { it.isWhitespace() }
+        }
 }

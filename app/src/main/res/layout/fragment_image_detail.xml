@@ -6,9 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="image"
-            type="com.example.nebula.data.model.ImageObject" />
+        <variable name="image" type="com.example.nebula.data.model.ImageObject" />
+        <variable name="imageName" type="String" />
+        <variable name="imageUrl" type="String" />
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -19,12 +19,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/detail_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
+                android:transitionName="@{@string/image_transition_name(imageName)}"
+                app:imageUrl="@{imageUrl}"
                 android:src="@drawable/bg_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
