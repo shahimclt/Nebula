@@ -70,4 +70,8 @@
     <color name="poster_overlay">#991c232e</color>
 
     <color name="colorImagePlaceholder">#CACACA</color>
+
+    <color name="colorAccent.DayNight">@color/colorPrimary</color>
+
+
 </resources>

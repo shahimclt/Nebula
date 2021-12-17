@@ -1,3 +1,6 @@
 <resources>
-
+    <style name="ShapeAppearance.App.RoundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
 </resources>
