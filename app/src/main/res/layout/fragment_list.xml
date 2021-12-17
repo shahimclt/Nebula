@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable type="com.example.nebula.ui.list.ListViewModel" name="viewModel"/>
+        <variable type="com.example.nebula.ui.list.ImageListViewModel" name="viewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

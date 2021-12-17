@@ -10,7 +10,7 @@ import com.example.nebula.data.repository.ImageRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ListViewModel(application: Application) : AndroidViewModel(application) {
+class ImageListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val imageRepository: ImageRepository = ImageRepository()
 
@@ -49,16 +49,10 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-//
-//    private fun getUserBookIds() {
-//        accountRepo.getUserProfile()?.addSnapshotListener { value, e ->
-//            if (e != null) {
-//                //TODO notify error
-//            }
-//            val profile = value?.toObject(UserProfile::class.java)
-//            profile?.let {
-//                _ownedBookIds.postValue(profile.ownedBooks)
-//            }
-//        }
-//    }
+
+    fun imageAtIndex(i: Int): LiveData< ImageObject? > {
+        return Transformations.map(_images) {
+            it[i]
+        }
+    }
 }
