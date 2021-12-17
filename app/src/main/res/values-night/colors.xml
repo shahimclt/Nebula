@@ -13,4 +13,6 @@
 
 
     <color name="colorImagePlaceholder">#404040</color>
+
+    <color name="colorAccent.DayNight">@color/colorSecondary</color>
 </resources>

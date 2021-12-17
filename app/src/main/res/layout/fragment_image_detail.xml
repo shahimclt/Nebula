@@ -18,12 +18,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/detail_image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
+                android:layout_marginHorizontal="@dimen/element_spacing"
+                android:layout_marginTop="@dimen/activity_margin"
+                app:shapeAppearance="@style/ShapeAppearance.App.RoundedImageView"
                 android:transitionName="@{@string/image_transition_name(imageName)}"
                 app:layout_constraintDimensionRatio="1"
                 app:imageAspect="@{image.safeAspectRatio}"
@@ -64,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{@string/image_detail_copyright(image.copyright)}"
                     android:textAppearance="@style/TextAppearance.Nebula.Body2"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent.DayNight"
                     tools:text="© Nasa" />
 
             </LinearLayout>
