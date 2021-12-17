@@ -72,18 +72,29 @@
 
             </LinearLayout>
 
-
-            <ImageButton
+            <Button
                 android:id="@+id/detail_save"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/activity_margin"
                 app:layout_constraintTop_toTopOf="@+id/linearLayout"
-                android:background="#00000000"
-                app:tint="@color/secondaryTextColor"
-                android:foreground="?attr/selectableItemBackgroundBorderless"/>
-            <!--        app:srcCompat="@drawable/ic_file_download_24dp" />-->
+                style="@style/IconButton.DayNight"
+                app:icon="@drawable/ic_file_download_24dp"
+                android:text="" />
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/detail_save"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/linearLayout"-->
+<!--                android:background="#00000000"-->
+<!--                app:tint="@color/textColorSecondary"-->
+<!--                android:foreground="?attr/selectableItemBackgroundBorderless"-->
+<!--                    app:srcCompat="@drawable/ic_file_download_24dp" />-->
 
             <ProgressBar
                 android:id="@+id/progressBar"
