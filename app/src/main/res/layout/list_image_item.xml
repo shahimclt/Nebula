@@ -28,7 +28,7 @@
                 app:layout_constraintDimensionRatio="1"
                 android:transitionName="@{@string/image_transition_name(image.uniqueName)}"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
+                android:scaleType="centerInside"
                 android:src="@drawable/bg_placeholder"
                 app:imageUrl="@{image.url}"
                 app:imageAspect="@{image.safeAspectRatio}"
