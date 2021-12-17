@@ -14,9 +14,9 @@ data class ImageObject (
 
     var aspectRatio: Float? = null
 
-    val safeAspectRatio : String
+    val safeAspectRatio : Float
         get() {
-            return String.format("%.2f", aspectRatio?:1f)
+            return aspectRatio?:1f
         }
 
     val hasAspectRatio : Boolean
@@ -28,4 +28,9 @@ data class ImageObject (
     get() {
         return LocalDate.parse(_date)
     }
+
+    val uniqueName : String
+        get() {
+            return title.filterNot { it.isWhitespace() }
+        }
 }

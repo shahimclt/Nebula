@@ -2,4 +2,7 @@
     <string name="app_name">NEBULA</string>
 
     <string name="image_eds_message">Nothing to show here</string>
+
+    <string name="image_detail_copyright">© %s</string>
+    <string name="image_transition_name">img_transit_%s</string>
 </resources>
