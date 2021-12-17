@@ -23,9 +23,6 @@
             android:name="position"
             app:argType="integer" />
         <argument
-            android:name="url"
-            app:argType="string" />
-        <argument
             android:name="name"
             app:argType="string" />
     </fragment>

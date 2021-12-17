@@ -14,9 +14,9 @@ data class ImageObject (
 
     var aspectRatio: Float? = null
 
-    val safeAspectRatio : String
+    val safeAspectRatio : Float
         get() {
-            return String.format("%.2f", aspectRatio?:1f)
+            return aspectRatio?:1f
         }
 
     val hasAspectRatio : Boolean

@@ -50,9 +50,7 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun imageAtIndex(i: Int): LiveData< ImageObject? > {
-        return Transformations.map(_images) {
-            it[i]
-        }
+    fun imageAtIndex(i: Int): ImageObject? {
+        return _images.value?.get(i)
     }
 }

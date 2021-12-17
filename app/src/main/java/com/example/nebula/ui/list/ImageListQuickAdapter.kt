@@ -18,15 +18,6 @@ class ImageListQuickAdapter(data: MutableList<ImageObject>?): BaseQuickAdapter<I
             image = item
             executePendingBindings()
         }
-        val imageView = holder.getView<AppCompatImageView>(R.id.list_image)
-        val layoutParams = imageView.layoutParams as ConstraintLayout.LayoutParams
-        layoutParams.dimensionRatio = item.safeAspectRatio
-        imageView.layoutParams = layoutParams
-        Glide.with(context)
-            .load(item.url)
-            .placeholder(R.drawable.bg_placeholder)
-            .error(R.drawable.bg_placeholder)
-            .into(imageView)
     }
 
     class DiffCallback: DiffUtil.ItemCallback<ImageObject>() {
