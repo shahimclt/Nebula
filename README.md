@@ -4,9 +4,9 @@
 
 Nebula is a demo gallery app which allows you to browse and download a curated list of NASA images.
 
-<img src="https://user-images.githubusercontent.com/8318002/146634212-7d66d84e-0cdb-493b-9751-a64ce9bc7279.jpg" alt="dark_list" width="400">    <img src="https://user-images.githubusercontent.com/8318002/146634213-64ffb730-bdcb-461f-8514-7bd3b76fd411.jpg" alt="dark_detail" width="400">
+<img src="https://user-images.githubusercontent.com/8318002/146636672-7a866407-f572-4692-a44f-88897e9fce0c.jpg" alt="dark_list" width="400">    <img src="https://user-images.githubusercontent.com/8318002/146634213-64ffb730-bdcb-461f-8514-7bd3b76fd411.jpg" alt="dark_detail" width="400">
 
-<img src="https://user-images.githubusercontent.com/8318002/146634209-7a0bbca6-f497-4b9d-87ec-11033f65f4f4.jpg" alt="dark_list" width="400">    <img src="https://user-images.githubusercontent.com/8318002/146634211-d6cbf84b-7edc-42f6-9df0-3b9d83efc2c6.jpg" alt="dark_detail" width="400">
+<img src="https://user-images.githubusercontent.com/8318002/146636673-6f7d112d-d7a5-48ad-81df-6f03ab34d29f.jpg" alt="dark_list" width="400">    <img src="https://user-images.githubusercontent.com/8318002/146634211-d6cbf84b-7edc-42f6-9df0-3b9d83efc2c6.jpg" alt="dark_detail" width="400">
 
 ## Usage
 
