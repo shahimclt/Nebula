@@ -75,7 +75,7 @@ class ImageDetailFragment : Fragment() {
         /**
          * attach a listener to the image loading so that the EnterTransition can be started after the image has been loaded
          */
-        val image = imageListViewModel.imageAtIndex(args.position)
+        val image = imageListViewModel.imageWithName(args.name)
         binding.image = image
         if (image == null) {
             startPostponedEnterTransition()
@@ -111,7 +111,7 @@ class ImageDetailFragment : Fragment() {
             checkSavePermission {
                 view.isEnabled = false
                 binding.progressBar.visibility = View.VISIBLE
-                imageListViewModel.downloadImage(args.position)
+                imageListViewModel.downloadImage(args.name)
             }
         }
     }

@@ -29,6 +29,9 @@ data class ImageObject (
         return LocalDate.parse(_date)
     }
 
+    /*
+    * a unique name that can be used to identify the image
+     */
     val uniqueName : String
         get() {
             return title.filterNot { it.isWhitespace() }

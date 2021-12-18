@@ -53,25 +53,27 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
     private fun calculateImageDimensions(list: List<ImageObject>) {
         for (image in list) {
             if (!image.hasAspectRatio) {
-                val futureBitmap = Glide.with(getApplication() as Context)
-                    .asBitmap()
-                    .load(image.url)
-                    .submit()
-                val bitmap = futureBitmap.get()
-                val w = bitmap.width.toFloat()
-                val h = bitmap.height.toFloat()
-                image.aspectRatio = w / h
-                _images.postValue(list)
-                Log.d("TAG", "calculateImageDimensions: ${image.title} is $w x $h")
+                viewModelScope.launch(Dispatchers.IO) {
+                    val futureBitmap = Glide.with(getApplication() as Context)
+                        .asBitmap()
+                        .load(image.url)
+                        .submit()
+                    val bitmap = futureBitmap.get()
+                    val w = bitmap.width.toFloat()
+                    val h = bitmap.height.toFloat()
+                    image.aspectRatio = w / h
+                    _images.postValue(list)
+                    Log.d("TAG", "calculateImageDimensions: ${image.title} is $w x $h")
+                }
             }
         }
     }
 
     /**
-     * returns the [ImageObject] instance at position [i]
+     * returns the [ImageObject] matching the [name]
      */
-    fun imageAtIndex(i: Int): ImageObject? {
-        return _images.value?.get(i)
+    fun imageWithName(name: String): ImageObject? {
+        return _images.value?.find { im -> im.uniqueName == name }
     }
 
     companion object {
@@ -102,10 +104,10 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
     val downloadResult = MutableLiveData(DownloadResultObject.none())
 
     /**
-     * Triggers a download of the image at index [i] and saves it to gallery
+     * Triggers a download of the image what matching [name] and saves it to gallery
      */
-    fun downloadImage(i: Int) {
-        val image = imageAtIndex(i)?:return
+    fun downloadImage(name: String) {
+        val image = imageWithName(name)?:return
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val file = ImageDownloadUtil.download(getApplication(), image)
