@@ -40,6 +40,6 @@ _You can check out the older project [here](https://github.com/shahimclt/starryn
 
 You can also check out my other projects:
 
-### <img src="https://user-images.githubusercontent.com/8318002/132136057-a5ede310-0dae-4341-af16-9f71a9a219a5.png" alt="Logo" width="80"> [Booksy](https://github.com/shahimclt/booksy)
+### <img src="https://user-images.githubusercontent.com/8318002/132136057-a5ede310-0dae-4341-af16-9f71a9a219a5.png" alt="Logo" width="40"> [Booksy](https://github.com/shahimclt/booksy)
 
-### <img src="https://github.com/shahimclt/TheMovieApp/blob/master/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" alt="Logo" width="80"> [The Movie App](https://github.com/shahimclt/TheMovieApp)
+### <img src="https://github.com/shahimclt/TheMovieApp/blob/master/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" alt="Logo" width="40"> [The Movie App](https://github.com/shahimclt/TheMovieApp)
