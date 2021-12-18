@@ -72,6 +72,9 @@ class ImageDetailFragment : Fragment() {
     }
 
     private fun init() {
+        /**
+         * attach a listener to the image loading so that the EnterTransition can be started after the image has been loaded
+         */
         val image = imageListViewModel.imageAtIndex(args.position)
         binding.image = image
         if (image == null) {
@@ -101,6 +104,9 @@ class ImageDetailFragment : Fragment() {
             .thumbnail(thumbRequest)
             .into(binding.detailImage)
 
+        /**
+         * Trigger a download on button click
+         */
         binding.detailSave.setOnClickListener { view ->
             checkSavePermission {
                 view.isEnabled = false
@@ -111,6 +117,10 @@ class ImageDetailFragment : Fragment() {
     }
 
     private fun observe() {
+        /**
+         * Listen for a download result and show the appropriate notification
+         * value is an [ImageListViewModel.DownloadResultObject] instance
+         */
         imageListViewModel.downloadResult.observe(viewLifecycleOwner) { res ->
             Log.d("TAG", "observe: got result ${res.status}")
             when (res.status) {
@@ -151,9 +161,7 @@ class ImageDetailFragment : Fragment() {
         }
     }
     /**
-     * Check write access permission
-     *
-     * @param onGrant Callback when permission is granted
+     * Check write access permission. calls the [onGrant] Callback when permission is granted
      */
     private fun checkSavePermission(onGrant: () -> Unit) {
 

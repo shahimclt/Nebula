@@ -13,6 +13,7 @@ import com.example.nebula.R
 import com.example.nebula.data.model.ImageObject
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * Utility class to save an image to gallery
@@ -20,13 +21,15 @@ import java.io.FileOutputStream
 object ImageDownloadUtil {
 
     /**
-     * Saves the image to gallery. This methods tries to access the ImageObject.hdurl first. If that is not set, it falls back to ImageObject.url
-     * The image is saved to public gallery
+     * Blocking function. Downloads the image, then calls [saveImageToGallery].
+     * This methods tries to access the ImageObject.hdurl first. If that is not set, it falls back to ImageObject.url
+     * The image is saved to public gallery under an App folder
      *
      * @param c context
      * @param image ImageObject instance
-     * @return RxKotlin observable which returns a reference to the saved file on success.
+     * @return a reference to the saved file on success.
      */
+    @Throws(IOException::class)
     fun download(c: Context, image: ImageObject): File {
 
         try {
@@ -61,10 +64,18 @@ object ImageDownloadUtil {
             return saveImageToGallery(c, bitmap)
 
         } catch (e: Exception) {
-            throw java.lang.Exception("Failed loading image")
+            throw IOException("Failed loading image")
         }
     }
 
+    /**
+     * Blocking function. writes the file into a file in the public pictures folder.
+     * The image is saved to public gallery under an App folder
+     *
+     * @param c context
+     * @param bitmap Image Bitmap
+     * @return a reference to the saved file on success.
+     */
     private fun saveImageToGallery(c: Context, bitmap: Bitmap): File {
         val directory: File =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)

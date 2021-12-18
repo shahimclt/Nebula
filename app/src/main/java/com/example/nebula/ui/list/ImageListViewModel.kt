@@ -35,6 +35,9 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
         getImages()
     }
 
+    /**
+     * Trigger a fetch of the image list
+     */
     private fun getImages() {
         viewModelScope.launch(Dispatchers.IO) {
             val im = imageRepository.fetchImages(getApplication() as Context)
@@ -43,6 +46,10 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    /**
+     * Calculates the image dimensions and sets it to the [ImageObject] instance
+     * Useful to set the imageView Aspect ratio in the list to avoid glitches when scrolling
+     */
     private fun calculateImageDimensions(list: List<ImageObject>) {
         for (image in list) {
             if (!image.hasAspectRatio) {
@@ -60,6 +67,9 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    /**
+     * returns the [ImageObject] instance at position [i]
+     */
     fun imageAtIndex(i: Int): ImageObject? {
         return _images.value?.get(i)
     }
@@ -73,6 +83,10 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
     @StringDef(RESULT_NONE, RESULT_SUCCESS, RESULT_ERROR)
     annotation class DownloadResult
 
+    /**
+     * Enum class to represent different states of the download result
+     * Supports one of the values from [DownloadResult] and a [file] in case of [RESULT_SUCCESS]
+     */
     data class DownloadResultObject(@DownloadResult val status: String, val file: File? = null) {
         companion object {
             fun none() = DownloadResultObject(RESULT_NONE)
@@ -81,8 +95,15 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    /**
+     * posts a [DownloadResultObject] when a download fails or succeeds.
+     * The value is rest back to [DownloadResultObject.none] by the subscriber after it has consumed the event
+     */
     val downloadResult = MutableLiveData(DownloadResultObject.none())
 
+    /**
+     * Triggers a download of the image at index [i] and saves it to gallery
+     */
     fun downloadImage(i: Int) {
         val image = imageAtIndex(i)?:return
         viewModelScope.launch(Dispatchers.IO) {

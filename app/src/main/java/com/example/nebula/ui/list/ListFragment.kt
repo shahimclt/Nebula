@@ -48,8 +48,6 @@ class ListFragment : Fragment() {
 
     }
 
-
-
     companion object {
 
         @JvmStatic
