@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <style name="ThemeOverlay.DayNight" parent="">
+        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="colorOnPrimary">@color/colorOnSecondary</item>
+    </style>
 </resources>

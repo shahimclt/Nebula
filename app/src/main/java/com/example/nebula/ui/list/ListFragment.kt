@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.BindingAdapter
@@ -19,6 +20,8 @@ import com.chad.library.adapter.base.animation.*
 import com.example.nebula.R
 import com.example.nebula.data.model.ImageObject
 import com.example.nebula.databinding.FragmentListBinding
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 
 class ListFragment : Fragment() {
 
@@ -45,8 +48,6 @@ class ListFragment : Fragment() {
 
     }
 
-
-
     companion object {
 
         @JvmStatic
@@ -64,6 +65,12 @@ class ListFragment : Fragment() {
         fun setImageAspect(view: AppCompatImageView, aspect: Float) {
             val layoutParams = view.layoutParams as ConstraintLayout.LayoutParams
             layoutParams.dimensionRatio = String.format("%.2f", aspect)
+        }
+
+        @JvmStatic
+        @BindingAdapter("date")
+        fun setDate(view: AppCompatTextView, date: LocalDate?) {
+            view.text = date?.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
         }
     }
 
