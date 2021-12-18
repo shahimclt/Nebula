@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable name="image" type="com.example.nebula.data.model.ImageObject" />
         <variable name="imageName" type="String" />
     </data>
@@ -66,6 +67,7 @@
                     android:id="@+id/detail_copyright"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility='@{image.copyright == null ? View.GONE : View.VISIBLE}'
                     android:text="@{@string/image_detail_copyright(image.copyright)}"
                     android:textAppearance="@style/TextAppearance.Nebula.Body2"
                     android:textColor="@color/colorAccent.DayNight"
