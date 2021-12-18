@@ -27,51 +27,49 @@ object ImageDownloadUtil {
      * @param image ImageObject instance
      * @return RxKotlin observable which returns a reference to the saved file on success.
      */
-    fun download(c: Context, image: ImageObject) {
+    fun download(c: Context, image: ImageObject): File {
 
-            try {
-                val listener = object : RequestListener<Bitmap> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Bitmap>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        throw java.lang.Exception()
-                    }
-
-                    override fun onResourceReady(
-                        resource: Bitmap?,
-                        model: Any?,
-                        target: Target<Bitmap>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
-
-
+        try {
+            val listener = object : RequestListener<Bitmap> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    throw java.lang.Exception()
                 }
 
-                val imageUrl = if(image.hdUrl.isNullOrBlank()) image.url else image.hdUrl
-                val futureBitmap = Glide.with(c)
-                    .asBitmap()
-                    .listener(listener)
-                    .load(imageUrl)
-                    .submit()
-                val bitmap = futureBitmap.get()
-                saveImageToGallery(c,bitmap)
-
-            } catch (e: Exception) {
-                throw java.lang.Exception("Failed loading image")
+                override fun onResourceReady(
+                    resource: Bitmap?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
             }
+
+            val imageUrl = if (image.hdUrl.isNullOrBlank()) image.url else image.hdUrl
+            val futureBitmap = Glide.with(c)
+                .asBitmap()
+                .listener(listener)
+                .load(imageUrl)
+                .submit()
+            val bitmap = futureBitmap.get()
+            return saveImageToGallery(c, bitmap)
+
+        } catch (e: Exception) {
+            throw java.lang.Exception("Failed loading image")
+        }
     }
 
-    private fun saveImageToGallery(c: Context, bitmap: Bitmap) {
+    private fun saveImageToGallery(c: Context, bitmap: Bitmap): File {
         val directory: File =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val folder = File(directory,c.getString(R.string.app_name))
-        if(!folder.isDirectory) folder.mkdir()
+        val folder = File(directory, c.getString(R.string.app_name))
+        if (!folder.isDirectory) folder.mkdir()
         val file = File(folder, "NB_" + System.currentTimeMillis() + ".jpg")
 
         val outputStream = FileOutputStream(file);
@@ -83,5 +81,6 @@ object ImageDownloadUtil {
 
         MediaScannerConnection.scanFile(c, arrayOf(file.absolutePath), null, null)
 
+        return file
     }
 }

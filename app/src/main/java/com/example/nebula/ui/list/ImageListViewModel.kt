@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import androidx.annotation.StringDef
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.FileProvider
 import androidx.lifecycle.*
@@ -16,6 +17,7 @@ import com.example.nebula.data.util.ImageDownloadUtil
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 import java.lang.Exception
 
 class ImageListViewModel(application: Application) : AndroidViewModel(application) {
@@ -62,45 +64,33 @@ class ImageListViewModel(application: Application) : AndroidViewModel(applicatio
         return _images.value?.get(i)
     }
 
+    companion object {
+        const val RESULT_NONE = "NA"
+        const val RESULT_SUCCESS = "S"
+        const val RESULT_ERROR = "Err"
+    }
+
+    @StringDef(RESULT_NONE, RESULT_SUCCESS, RESULT_ERROR)
+    annotation class DownloadResult
+
+    data class DownloadResultObject(@DownloadResult val status: String, val file: File? = null) {
+        companion object {
+            fun none() = DownloadResultObject(RESULT_NONE)
+            fun success(file: File) = DownloadResultObject(RESULT_SUCCESS,file)
+            fun error() = DownloadResultObject(RESULT_ERROR)
+        }
+    }
+
+    val downloadResult = MutableLiveData(DownloadResultObject.none())
+
     fun downloadImage(i: Int) {
         val image = imageAtIndex(i)?:return
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                ImageDownloadUtil.download(getApplication(), image)
-
-//                Snackbar.make(,
-//                    R.string.editor_save_success,
-//                    Snackbar.LENGTH_LONG
-//                )
-//                    .setAction(R.string.editor_save_view_prompt) {
-//
-//                        context?.let {
-//                            val intent = Intent()
-//                            intent.action = Intent.ACTION_VIEW
-//                            val photoURI = FileProvider.getUriForFile(
-//                                requireContext(),
-//                                requireContext().applicationContext.packageName + ".provider",
-//                                file
-//                            )
-//                            intent.setDataAndType(photoURI, "image/jpeg")
-////                                    intent.type = "image/jpeg"
-//                            intent.flags =
-//                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION
-//                            startActivity(intent)
-//                        }
-//                    }
-//                    .show()
-//                view.isEnabled = true
-//                progressBar.visibility = View.GONE
+                val file = ImageDownloadUtil.download(getApplication(), image)
+                downloadResult.postValue(DownloadResultObject.success(file))
             } catch (e: Exception) {
-//                Snackbar.make(
-//                    container,
-//                    R.string.editor_save_error,
-//                    Snackbar.LENGTH_LONG
-//                ).show()
-//                view.isEnabled = true
-//                progressBar.visibility = View.GONE
-
+                downloadResult.postValue(DownloadResultObject.error())
             }
         }
     }

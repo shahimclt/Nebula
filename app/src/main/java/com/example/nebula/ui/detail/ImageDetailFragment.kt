@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -31,8 +31,6 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.CompositePermissionListener
 import com.karumi.dexter.listener.single.PermissionListener
 import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class ImageDetailFragment : Fragment() {
 
@@ -46,8 +44,10 @@ class ImageDetailFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         val transition =
             TransitionInflater.from(context).inflateTransition(R.transition.shared_image)
@@ -61,12 +61,10 @@ class ImageDetailFragment : Fragment() {
         }
 
         postponeEnterTransition()
-
         init()
+        observe()
 
         return binding.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,32 +74,21 @@ class ImageDetailFragment : Fragment() {
     private fun init() {
         val image = imageListViewModel.imageAtIndex(args.position)
         binding.image = image
-        if(image==null) {
+        if (image == null) {
             startPostponedEnterTransition()
             return
         }
         val listener = object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
+            override fun onLoadFailed(e: GlideException?,model: Any?,target: Target<Drawable>?,isFirstResource: Boolean): Boolean {
                 startPostponedEnterTransition()
                 return false
             }
 
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
+            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
             ): Boolean {
                 startPostponedEnterTransition()
                 return false
             }
-
         }
 
         val thumbRequest = Glide.with(requireContext())
@@ -118,25 +105,67 @@ class ImageDetailFragment : Fragment() {
             checkSavePermission {
                 view.isEnabled = false
                 binding.progressBar.visibility = View.VISIBLE
-
                 imageListViewModel.downloadImage(args.position)
             }
         }
-
     }
 
+    private fun observe() {
+        imageListViewModel.downloadResult.observe(viewLifecycleOwner) { res ->
+            Log.d("TAG", "observe: got result ${res.status}")
+            when (res.status) {
+                ImageListViewModel.RESULT_SUCCESS -> {
+                    Snackbar.make(binding.root, R.string.editor_save_success, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.editor_save_view_prompt) {
+                            context?.let {
+                                val intent = Intent()
+                                intent.action = Intent.ACTION_VIEW
+                                val photoURI = FileProvider.getUriForFile(
+                                    requireContext(),
+                                    requireContext().applicationContext.packageName + ".provider",
+                                    res.file!!
+                                )
+                                intent.setDataAndType(photoURI, "image/jpeg")
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                startActivity(intent)
+                            }
+                        }
+                        .show()
+                    binding.detailSave.isEnabled = true
+                    binding.progressBar.visibility = View.GONE
+                    imageListViewModel.downloadResult.postValue(ImageListViewModel.DownloadResultObject.none())
+                }
+                ImageListViewModel.RESULT_ERROR -> {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.editor_save_error,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    binding.detailSave.isEnabled = true
+                    binding.progressBar.visibility = View.GONE
+                    imageListViewModel.downloadResult.postValue(ImageListViewModel.DownloadResultObject.none())
+                }
+            }
+
+        }
+    }
     /**
      * Check write access permission
      *
      * @param onGrant Callback when permission is granted
      */
-    private fun checkSavePermission(onGrant : () -> Unit) {
+    private fun checkSavePermission(onGrant: () -> Unit) {
 
         val baseLis: PermissionListener = object : PermissionListener {
             override fun onPermissionGranted(response: PermissionGrantedResponse) {
                 onGrant()
             }
-            override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+
+            override fun onPermissionRationaleShouldBeShown(
+                permission: PermissionRequest,
+                token: PermissionToken
+            ) {
                 context?.let {
                     AlertDialog.Builder(it)
                         .setTitle(R.string.permission_rat_storage_title)
@@ -145,7 +174,7 @@ class ImageDetailFragment : Fragment() {
                             dialog.dismiss()
                             token.cancelPermissionRequest()
                         }
-                        .setPositiveButton(R.string.dialog_button_ok){ dialog, _ ->
+                        .setPositiveButton(R.string.dialog_button_ok) { dialog, _ ->
                             dialog.dismiss()
                             token.continuePermissionRequest()
                         }
@@ -160,13 +189,14 @@ class ImageDetailFragment : Fragment() {
 
         val snackBarLis: PermissionListener = SnackbarOnDeniedPermissionListener.Builder.with(
             activity?.findViewById(R.id.container) as ViewGroup,
-            R.string.permission_rat_storage_denied_export)
+            R.string.permission_rat_storage_denied_export
+        )
             .withDuration(5000)
             .build()
 
         Dexter.withActivity(activity)
             .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .withListener(CompositePermissionListener(baseLis,snackBarLis)).check()
+            .withListener(CompositePermissionListener(baseLis, snackBarLis)).check()
     }
 
     override fun onDestroyView() {
