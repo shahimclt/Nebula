@@ -46,14 +46,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_image">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/detail_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:date="@{image.date}"
                     android:textAppearance="@style/TextAppearance.Nebula.Caption"
                     tools:text="2 Jan 2019" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/detail_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -61,7 +62,7 @@
                     android:textAppearance="@style/TextAppearance.Nebula.Headline6"
                     tools:text="Milky way Galaxy" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/detail_copyright"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,18 +85,6 @@
                 app:icon="@drawable/ic_file_download_24dp"
                 android:text="" />
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/detail_save"-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/linearLayout"-->
-<!--                android:background="#00000000"-->
-<!--                app:tint="@color/textColorSecondary"-->
-<!--                android:foreground="?attr/selectableItemBackgroundBorderless"-->
-<!--                    app:srcCompat="@drawable/ic_file_download_24dp" />-->
-
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:visibility="gone"
@@ -107,7 +96,7 @@
                 app:layout_constraintStart_toStartOf="@+id/detail_save"
                 app:layout_constraintTop_toTopOf="@+id/detail_save" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/detail_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
